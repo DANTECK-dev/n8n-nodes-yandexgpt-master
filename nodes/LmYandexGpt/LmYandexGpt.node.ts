@@ -1,4 +1,3 @@
-//import { ChatYandexGPTWithTools } from './ChatYandexGPTWithTools';
 import { ChatYandexGPT } from '@langchain/yandex/chat_models';
 import { YandexGPTInputs } from '@langchain/yandex';
 import {
@@ -7,12 +6,10 @@ import {
 	INodeListSearchResult,
 	NodeConnectionType,
 	IAllExecuteFunctions,
-//	type IExecuteFunctions,
 	type INodeType,
 	type INodeTypeDescription,
 	type SupplyData,
 } from 'n8n-workflow';
-//import { IExecuteSingleFunctions } from 'n8n-workflow';
 
 export class LmYandexGpt implements INodeType {
 	description: INodeTypeDescription = {
@@ -39,9 +36,7 @@ export class LmYandexGpt implements INodeType {
 				],
 			},
 		},
-		// eslint-disable-next-line n8n-nodes-base/node-class-description-inputs-wrong-regular-node
 		inputs: [],
-		// eslint-disable-next-line n8n-nodes-base/node-class-description-outputs-wrong
 		outputs: [NodeConnectionType.AiLanguageModel],
 		outputNames: ['Model'],
 		credentials: [
@@ -152,6 +147,7 @@ export class LmYandexGpt implements INodeType {
 		},
 	};
 
+	// Метод для обработки данных
 	async supplyData(this: IAllExecuteFunctions, itemIndex: number): Promise<SupplyData> {
 		const credentials = await this.getCredentials('yandexGptApi');
 	
@@ -168,20 +164,28 @@ export class LmYandexGpt implements INodeType {
 	
 		const options = this.getNodeParameter('options', itemIndex, {}) as Partial<YandexGPTInputs>;
 	
-		const chat = new ChatYandexGPT({
+		const model = new ChatYandexGPT({
 			apiKey: credentials.apiKey as string,
 			modelURI: modelUri,
 			...options,
 		});
 	
-		(chat as any).bindTools = function (tools: any[], kwargs?: any) {
+		// Подключаем инструменты (tools) и память (memory) для AgentExecutor
+		(model as any).bindTools = function (tools: any[], kwargs?: any) {
 			const functionSchemas = tools.map(tool => tool.schema || tool.definition);
-			(this as any).functionSchemas = functionSchemas;
+			this.functionSchemas = functionSchemas;
+			return this;
+		};
+
+		// Подключение памяти
+		(model as any).bindMemory = function(memory: any) {
+			this.memory = memory;
 			return this;
 		};
 	
+		// Возвращаем объект в формате, который ожидает AI Agent
 		return {
-			response: chat,
+			response: model, // Тут мы возвращаем объект модели, которая теперь поддерживает инструменты и память
 		};
 	}
 }
