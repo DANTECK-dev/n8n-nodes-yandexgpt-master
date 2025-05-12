@@ -6,14 +6,13 @@
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/olegtsvetkov/n8n-nodes-yandexgpt",
+  "homepage": "https://github.com/DANTECK-dev/n8n-nodes-yandexgpt-master",
   "author": {
-    "name": "Oleg Tsvetkov",
-    "email": "me@olegtsvetkov.com"
+    "name": "Danteck"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/olegtsvetkov/n8n-nodes-yandexgpt.git"
+    "url": "https://github.com/DANTECK-dev/n8n-nodes-yandexgpt-master.git"
   },
   "engines": {
     "node": ">=18.10",
