@@ -5,10 +5,10 @@ import {
 	INodeProperties,
 } from 'n8n-workflow';
 
-export class YandexGptApi implements ICredentialType {
-	name = 'yandexGptApi';
+export class ChatYandexGptApi implements ICredentialType {
+	name = 'chatYandexGptApi';
 	displayName = 'Yandex GPT API';
-	icon: Icon = 'file:YandexGptApi.svg';
+	icon: Icon = 'file:ChatYandexGptApi.svg';
 	documentationUrl = 'https://yandex.cloud/ru/docs/foundation-models/api-ref/authentication';
 	properties: INodeProperties[] = [
 		{

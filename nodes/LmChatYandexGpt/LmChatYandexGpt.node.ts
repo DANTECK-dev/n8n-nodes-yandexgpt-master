@@ -11,11 +11,11 @@ import {
 	type SupplyData,
 } from 'n8n-workflow';
 
-export class LmYandexGpt implements INodeType {
+export class LmChatYandexGpt implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Yandex GPT Model',
-		name: 'lmYandexGpt',
-		icon: 'file:LmYandexGpt.svg',
+		name: 'lmChatYandexGpt',
+		icon: 'file:LmChatYandexGpt.svg',
 		group: ['transform'],
 		version: 1,
 		description: 'Yandex GPT language model',
@@ -43,7 +43,7 @@ export class LmYandexGpt implements INodeType {
 		outputNames: ['Model'],
 		credentials: [
 			{
-				name: 'yandexGptApi',
+				name: 'chatYandexGptApi',
 				required: true,
 			},
 		],
@@ -151,7 +151,7 @@ export class LmYandexGpt implements INodeType {
 
 	// Метод для обработки данных
 	async supplyData(this: IAllExecuteFunctions, itemIndex: number): Promise<SupplyData> {
-		const credentials = await this.getCredentials('yandexGptApi');
+		const credentials = await this.getCredentials('chatYandexGptApi');
 	
 		const modelUriInput = this.getNodeParameter('model', itemIndex, '', {
 			extractValue: true,
